@@ -1,5 +1,4 @@
-﻿using Assets.Src.Scripts.Bootstrap;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +12,16 @@ namespace Assets.Src.Scripts.Pool
         private string _identifier;
         private bool _isRotate;
         private Tweener _wrongAnswerTweener;
+        private SymbolSpawner _spawner;
 
         private void Start()
         {
             _button.onClick.AddListener(CheckTask);
+        }
+
+        public void Construct(SymbolSpawner symbolSpawner)
+        {
+            _spawner = symbolSpawner;
         }
 
         public void DisableSymbol()
@@ -26,7 +31,7 @@ namespace Assets.Src.Scripts.Pool
 
             transform.DOScale(new Vector3(0.1f, 0.1f, 1), 0.25f)
                 .SetEase(Ease.Linear)
-                .OnStart(() => BootstrapInstaller.Instance.GameAudio.PlayFadeSound())
+                .OnStart(() => _spawner.GameAudio.PlayFadeSound())
                 .OnComplete(() => gameObject.SetActive(false));
         }
 
@@ -44,7 +49,7 @@ namespace Assets.Src.Scripts.Pool
 
             transform.DOScale(new Vector3(10, 10, 1), 0.25f)
                 .SetEase(Ease.OutBounce)
-                .OnStart(() => BootstrapInstaller.Instance.GameAudio.PlayInstantiateSound());
+                .OnStart(() => _spawner.GameAudio.PlayInstantiateSound());
 
             if (_isRotate)
             {
@@ -55,15 +60,15 @@ namespace Assets.Src.Scripts.Pool
 
         private void CheckTask()
         {
-            if (BootstrapInstaller.Instance.LevelTask.CheckCorrectAnswer(_identifier))
+            if (_spawner.LevelTask.CheckCorrectAnswer(_identifier))
             {
-                BootstrapInstaller.Instance.LevelTask.Win();
+                _spawner.LevelTask.Win();
 
                 _symbolImage.transform.DOScale(new Vector3(1.5f, 1.5f, 1), 0.1f)
                     .SetLoops(2, LoopType.Yoyo)
                     .SetEase(Ease.Linear);
 
-                BootstrapInstaller.Instance.GameMenu
+                _spawner.GameMenu
                     .UiParticles.UseStarParticles(transform.position);
             }
             else
@@ -72,8 +77,9 @@ namespace Assets.Src.Scripts.Pool
                     _wrongAnswerTweener.Complete();
 
                 _wrongAnswerTweener = _symbolImage.transform
-                     .DOShakePosition(0.25f, new Vector2(2f, 0), randomness: 0, randomnessMode: ShakeRandomnessMode.Harmonic)
-                     .OnStart(() => BootstrapInstaller.Instance.GameAudio.PlayWrongAnswerSound());
+                     .DOShakePosition(0.25f, new Vector2(2f, 0), randomness: 0,
+                     randomnessMode: ShakeRandomnessMode.Harmonic)
+                     .OnStart(() => _spawner.GameAudio.PlayWrongAnswerSound());
             }
         }
     }

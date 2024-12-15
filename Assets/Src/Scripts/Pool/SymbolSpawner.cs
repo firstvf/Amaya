@@ -1,5 +1,5 @@
-﻿using Assets.Src.Scripts.Bootstrap;
-using Assets.Src.Scripts.Data;
+﻿using Assets.Src.Scripts.Data;
+using Assets.Src.Scripts.Game;
 using System.Collections;
 using UnityEngine;
 
@@ -7,6 +7,10 @@ namespace Assets.Src.Scripts.Pool
 {
     public class SymbolSpawner : MonoBehaviour
     {
+        public LevelTask LevelTask { get; private set; }
+        public GameAudio GameAudio { get; private set; }
+        public GameMenu GameMenu { get; private set; }
+
         [SerializeField] private SymbolBundle[] _symbolBundle;
         [SerializeField] private Color32[] _colors;
         [SerializeField] private Symbol _symbol;
@@ -18,9 +22,19 @@ namespace Assets.Src.Scripts.Pool
 
         private void Start()
         {
-            _container = BootstrapInstaller.Instance.GameMenu.GameBoard;
+            _container = GameMenu.GameBoard;
             _pooler = new ObjectPooler<Symbol>(_symbol, _container, 9);
             _bundleId = Random.Range(0, _symbolBundle.Length);
+
+            foreach (var symbol in _pooler.GetList())
+                symbol.Construct(this);
+        }
+
+        public void Construct(LevelTask levelTask, GameMenu gameMenu, GameAudio gameAudio)
+        {
+            LevelTask = levelTask;
+            GameMenu = gameMenu;
+            GameAudio = gameAudio;
         }
 
         public void ClearLevel()
@@ -81,14 +95,13 @@ namespace Assets.Src.Scripts.Pool
         {
             int randomId = Random.Range(0, quantity);
 
-            while (BootstrapInstaller.Instance.LevelTask
-                .CheckUsedTask(_symbolBundle[bundleId].SymbolData.IdentifierArray[usedId[randomId]]))
+            while (LevelTask.CheckUsedTask
+                (_symbolBundle[bundleId].SymbolData.IdentifierArray[usedId[randomId]]))
             {
                 randomId = Random.Range(0, quantity);
             }
 
-            BootstrapInstaller.Instance.LevelTask
-                .SetTask(_symbolBundle[bundleId].SymbolData.IdentifierArray[usedId[randomId]]);
+            LevelTask.SetTask(_symbolBundle[bundleId].SymbolData.IdentifierArray[usedId[randomId]]);
         }
 
         private int UnusedIdentifier(int[] usedId, int bundleId)

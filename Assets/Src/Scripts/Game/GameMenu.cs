@@ -1,4 +1,4 @@
-﻿using Assets.Src.Scripts.Bootstrap;
+﻿using Assets.Src.Scripts.Pool;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +15,8 @@ namespace Assets.Src.Scripts.Game
         [SerializeField] private Image _inputLimiter;
         [SerializeField] private LoadingWindow _loadingWindow;
         private GridLayoutGroup _gridLayoutGroup;
+        private LevelTask _levelTask;
+        private SymbolSpawner _symbolSpawner;
 
         private void Awake()
         {
@@ -24,11 +26,17 @@ namespace Assets.Src.Scripts.Game
         private void Start()
         {
             _restartButton.onClick.AddListener(ShowLoadingWindow);
-            BootstrapInstaller.Instance.LevelTask.OnCompleteLevelHandler += ShowMenu;
+            _levelTask.OnCompleteLevelHandler += ShowMenu;            
             _restartButton.gameObject.SetActive(false);
 
-            _gridLayoutGroup.constraintCount = BootstrapInstaller.Instance.SymbolSpawner
+            _gridLayoutGroup.constraintCount = _symbolSpawner
                 .GetCurrentBundle().SymbolData.ColumnsCount;
+        }
+
+        public void Construct(LevelTask levelTask,SymbolSpawner symbolSpawner)
+        {
+            _levelTask = levelTask;
+            _symbolSpawner = symbolSpawner;
         }
 
         public void HideTask()

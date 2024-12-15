@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22e9650ca4510447906bcc60e97d200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <GameAudio>k__BackingField: {fileID: 8068920461351373933, guid: df16d8eebf1a18f4da2db82f7e97fa21, type: 3}
-  <GameMenu>k__BackingField: {fileID: 2909292660758645733, guid: 5017f4a56224def45bf0271822d0a324, type: 3}
-  <LevelTask>k__BackingField: {fileID: 4477694815068101738, guid: 7fa75de0e552fd0409020f54cc098219, type: 3}
-  <SymbolSpawner>k__BackingField: {fileID: 2934543105422697834, guid: 07b5fa3e89a8ab34bbb202214b99b7be, type: 3}
+  _gameAudio: {fileID: 8068920461351373933, guid: df16d8eebf1a18f4da2db82f7e97fa21, type: 3}
+  _gameMenu: {fileID: 2909292660758645733, guid: 5017f4a56224def45bf0271822d0a324, type: 3}
+  _levelTask: {fileID: 4477694815068101738, guid: 7fa75de0e552fd0409020f54cc098219, type: 3}
+  _symbolSpawner: {fileID: 2934543105422697834, guid: 07b5fa3e89a8ab34bbb202214b99b7be, type: 3}
