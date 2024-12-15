@@ -1,13 +1,7 @@
-﻿using VContainer;
-using VContainer.Unity;
-
-namespace Assets.Src.Scripts.Bootstrap
+﻿namespace Assets.Src.Scripts.Bootstrap
 {
-    public class BootstrapInstaller : LifetimeScope
+    public class BootstrapInstaller 
     {
-        protected override void Configure(IContainerBuilder builder)
-        {
-            base.Configure(builder);
-        }
+
     }
 }
