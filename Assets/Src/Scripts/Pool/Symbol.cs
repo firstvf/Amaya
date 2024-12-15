@@ -1,4 +1,4 @@
-﻿using Assets.Src.Scripts.Game;
+﻿using Assets.Src.Scripts.Bootstrap;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,7 +25,7 @@ namespace Assets.Src.Scripts.Pool
 
             transform.DOScale(new Vector3(0.1f, 0.1f, 1), 0.25f)
                 .SetEase(Ease.Linear)
-                .OnStart(() => GameAudio.Instance.PlayFadeSound())
+                .OnStart(() => BootstrapInstaller.Instance.GameAudio.PlayFadeSound())
                 .OnComplete(() => gameObject.SetActive(false));
         }
 
@@ -43,7 +43,7 @@ namespace Assets.Src.Scripts.Pool
 
             transform.DOScale(new Vector3(10, 10, 1), 0.25f)
                 .SetEase(Ease.OutBounce)
-                .OnStart(() => GameAudio.Instance.PlayInstantiateSound());
+                .OnStart(() => BootstrapInstaller.Instance.GameAudio.PlayInstantiateSound());
 
             if (_isRotate)
             {
@@ -54,20 +54,21 @@ namespace Assets.Src.Scripts.Pool
 
         private void CheckTask()
         {
-            if (LevelTask.Instance.CheckCorrectAnswer(_identifier))
+            if (BootstrapInstaller.Instance.LevelTask.CheckCorrectAnswer(_identifier))
             {
-                LevelTask.Instance.Win();
+                BootstrapInstaller.Instance.LevelTask.Win();
 
                 _symbolImage.transform.DOScale(new Vector3(1.5f, 1.5f, 1), 0.1f)
-                    .SetLoops(2,LoopType.Yoyo)
+                    .SetLoops(2, LoopType.Yoyo)
                     .SetEase(Ease.Linear);
 
-                GameParticles.Instance.UseStarParticles(transform.position);
+                BootstrapInstaller.Instance.GameMenu
+                    .UiParticles.UseStarParticles(transform.position);
             }
             else
                 _symbolImage.transform
                     .DOShakePosition(0.25f, new Vector2(2f, 0), randomness: 0, randomnessMode: ShakeRandomnessMode.Harmonic)
-                    .OnStart(() => GameAudio.Instance.PlayWrongAnswerSound());
+                    .OnStart(() => BootstrapInstaller.Instance.GameAudio.PlayWrongAnswerSound());
         }
     }
 }

@@ -4,18 +4,12 @@ namespace Assets.Src.Scripts.Game
 {
     public class GameAudio : MonoBehaviour
     {
-        public static GameAudio Instance { get; private set; }
-
         [SerializeField] 
         private AudioClip _instantiateSound, _winSound, _fadeSound, _wrongAnswerSound;
         private AudioSource _audioSource;
 
         private void Awake()
         {
-            if (Instance != null)
-                Destroy(gameObject);
-
-            Instance = this;
             _audioSource = GetComponent<AudioSource>();
         }
 

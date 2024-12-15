@@ -1,5 +1,5 @@
-﻿using Assets.Src.Scripts.Data;
-using Assets.Src.Scripts.Game;
+﻿using Assets.Src.Scripts.Bootstrap;
+using Assets.Src.Scripts.Data;
 using System.Collections;
 using UnityEngine;
 
@@ -7,8 +7,6 @@ namespace Assets.Src.Scripts.Pool
 {
     public class SymbolSpawner : MonoBehaviour
     {
-        public static SymbolSpawner Instance { get; private set; }
-
         [SerializeField] private SymbolBundle[] _symbolBundle;
         [SerializeField] private Color32[] _colors;
         [SerializeField] private Symbol _symbol;
@@ -16,20 +14,11 @@ namespace Assets.Src.Scripts.Pool
         private ObjectPooler<Symbol> _pooler;
         private readonly string[] _rotateSymbols = { "7", "8" };
         private readonly WaitForSeconds _spawnDelay = new WaitForSeconds(0.1f);
-
         private int _bundleId;
-
-        private void Awake()
-        {
-            if (Instance != null)
-                Destroy(gameObject);
-
-            Instance = this;
-        }
 
         private void Start()
         {
-            _container = GameMenu.Instance.GameBoard;
+            _container = BootstrapInstaller.Instance.GameMenu.GameBoard;
             _pooler = new ObjectPooler<Symbol>(_symbol, _container, 9);
             _bundleId = Random.Range(0, _symbolBundle.Length);
         }
@@ -92,12 +81,14 @@ namespace Assets.Src.Scripts.Pool
         {
             int randomId = Random.Range(0, quantity);
 
-            while (LevelTask.Instance.CheckUsedTask(_symbolBundle[bundleId].SymbolData.IdentifierArray[usedId[randomId]]))
+            while (BootstrapInstaller.Instance.LevelTask
+                .CheckUsedTask(_symbolBundle[bundleId].SymbolData.IdentifierArray[usedId[randomId]]))
             {
                 randomId = Random.Range(0, quantity);
             }
 
-            LevelTask.Instance.SetTask(_symbolBundle[bundleId].SymbolData.IdentifierArray[usedId[randomId]]);
+            BootstrapInstaller.Instance.LevelTask
+                .SetTask(_symbolBundle[bundleId].SymbolData.IdentifierArray[usedId[randomId]]);
         }
 
         private int UnusedIdentifier(int[] usedId, int bundleId)

@@ -1,4 +1,4 @@
-﻿using Assets.Src.Scripts.Pool;
+﻿using Assets.Src.Scripts.Bootstrap;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,8 +8,8 @@ namespace Assets.Src.Scripts.Game
 {
     public class GameMenu : MonoBehaviour
     {
-        public static GameMenu Instance { get; private set; }
         [field: SerializeField] public Transform GameBoard { get; private set; }
+        [field: SerializeField] public UiParticles UiParticles { get; private set; }
         [SerializeField] private Image _endLevelUI;
         [SerializeField] private Button _restartButton;
         [SerializeField] private Text _taskText;
@@ -18,21 +18,17 @@ namespace Assets.Src.Scripts.Game
 
         private void Awake()
         {
-            if (Instance != null)
-                Destroy(gameObject);
-
-            Instance = this;
             _gridLayoutGroup = GameBoard.GetComponent<GridLayoutGroup>();
         }
 
         private void Start()
         {
             _restartButton.onClick.AddListener(Restart);
-            LevelTask.Instance.OnCompleteLevelHandler += ShowMenu;
+            BootstrapInstaller.Instance.LevelTask.OnCompleteLevelHandler += ShowMenu;
             _restartButton.gameObject.SetActive(false);
 
-            _gridLayoutGroup.constraintCount = SymbolSpawner
-                .Instance.GetCurrentBundle().SymbolData.ColumnsCount;
+            _gridLayoutGroup.constraintCount = BootstrapInstaller.Instance.SymbolSpawner
+                .GetCurrentBundle().SymbolData.ColumnsCount;
         }
 
         public void HideTask()
