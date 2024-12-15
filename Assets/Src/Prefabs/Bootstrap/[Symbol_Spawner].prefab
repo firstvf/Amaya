@@ -48,5 +48,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: af580ea8794d69643b5ab0c55a6e2c80, type: 2}
   _colors:
   - serializedVersion: 2
-    rgba: 4292598046
+    rgba: 4292588749
+  - serializedVersion: 2
+    rgba: 4292724991
+  - serializedVersion: 2
+    rgba: 4291604479
+  - serializedVersion: 2
+    rgba: 4294893757
+  - serializedVersion: 2
+    rgba: 4294955682
+  - serializedVersion: 2
+    rgba: 4289433599
+  - serializedVersion: 2
+    rgba: 4291212287
+  - serializedVersion: 2
+    rgba: 4291937023
+  - serializedVersion: 2
+    rgba: 4293715455
   _symbol: {fileID: 8086055156481836248, guid: ac538a68ad4e9e0488726be691dab82a, type: 3}

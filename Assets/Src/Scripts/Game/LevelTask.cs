@@ -16,16 +16,7 @@ namespace Assets.Src.Scripts.Game
 
         private void Start()
         {
-            Invoke(nameof(StartLevel), 2f);
-        }
-
-        private void StartLevel()
-        {
-            _quantity = BootstrapInstaller.Instance.SymbolSpawner.GetCurrentBundle()
-                .SymbolData.LevelUpAdditionalCellsCount;
-
-            BootstrapInstaller.Instance.GameMenu.SetInputLimiter(true);
-            BootstrapInstaller.Instance.SymbolSpawner.StartSpawn(_quantity);
+            Invoke(nameof(StartLevel), 1.5f);            
         }
 
         public bool CheckCorrectAnswer(string identifier)
@@ -59,6 +50,15 @@ namespace Assets.Src.Scripts.Game
             _correctIdentifier = identifier;
 
             BootstrapInstaller.Instance.GameMenu.SetTextTask(identifier);
+        }
+
+        private void StartLevel()
+        {
+            _quantity = BootstrapInstaller.Instance.SymbolSpawner.GetCurrentBundle()
+                .SymbolData.LevelUpAdditionalCellsCount;
+
+            BootstrapInstaller.Instance.GameMenu.SetInputLimiter(true);
+            BootstrapInstaller.Instance.SymbolSpawner.StartSpawn(_quantity);
         }
 
         private void StartSpawn()

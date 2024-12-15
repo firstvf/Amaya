@@ -12,6 +12,7 @@ namespace Assets.Src.Scripts.Pool
         [SerializeField] private Button _button;
         private string _identifier;
         private bool _isRotate;
+        private Tweener _wrongAnswerTweener;
 
         private void Start()
         {
@@ -66,9 +67,14 @@ namespace Assets.Src.Scripts.Pool
                     .UiParticles.UseStarParticles(transform.position);
             }
             else
-                _symbolImage.transform
-                    .DOShakePosition(0.25f, new Vector2(2f, 0), randomness: 0, randomnessMode: ShakeRandomnessMode.Harmonic)
-                    .OnStart(() => BootstrapInstaller.Instance.GameAudio.PlayWrongAnswerSound());
+            {
+                if (_wrongAnswerTweener.IsActive())
+                    _wrongAnswerTweener.Complete();
+
+                _wrongAnswerTweener = _symbolImage.transform
+                     .DOShakePosition(0.25f, new Vector2(2f, 0), randomness: 0, randomnessMode: ShakeRandomnessMode.Harmonic)
+                     .OnStart(() => BootstrapInstaller.Instance.GameAudio.PlayWrongAnswerSound());
+            }
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Assets.Src.Scripts.Bootstrap;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.Src.Scripts.Game
@@ -14,6 +13,7 @@ namespace Assets.Src.Scripts.Game
         [SerializeField] private Button _restartButton;
         [SerializeField] private Text _taskText;
         [SerializeField] private Image _inputLimiter;
+        [SerializeField] private LoadingWindow _loadingWindow;
         private GridLayoutGroup _gridLayoutGroup;
 
         private void Awake()
@@ -23,7 +23,7 @@ namespace Assets.Src.Scripts.Game
 
         private void Start()
         {
-            _restartButton.onClick.AddListener(Restart);
+            _restartButton.onClick.AddListener(ShowLoadingWindow);
             BootstrapInstaller.Instance.LevelTask.OnCompleteLevelHandler += ShowMenu;
             _restartButton.gameObject.SetActive(false);
 
@@ -55,7 +55,10 @@ namespace Assets.Src.Scripts.Game
                 .OnComplete(() => _restartButton.gameObject.SetActive(true));
         }
 
-        public void Restart()
-        => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        public void ShowLoadingWindow()
+        {
+            _loadingWindow.gameObject.SetActive(true);
+            _endLevelUI.gameObject.SetActive(false);
+        }
     }
 }
