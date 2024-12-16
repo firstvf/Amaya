@@ -23,7 +23,7 @@ namespace Assets.Src.Scripts.Bootstrap
             _symbolSpawner = Instantiate(_symbolSpawner, transform);
             _levelTask = Instantiate(_levelTask, transform);
 
-            _gameMenu.Construct(_levelTask, _symbolSpawner);
+            _gameMenu.Construct(_levelTask);
             _symbolSpawner.Construct(_levelTask, _gameMenu, _gameAudio);
             _levelTask.Construct(_gameAudio, _gameMenu, _symbolSpawner);
 

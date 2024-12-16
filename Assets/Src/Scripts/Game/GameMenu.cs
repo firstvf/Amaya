@@ -1,5 +1,4 @@
-﻿using Assets.Src.Scripts.Pool;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +15,6 @@ namespace Assets.Src.Scripts.Game
         [SerializeField] private LoadingWindow _loadingWindow;
         private GridLayoutGroup _gridLayoutGroup;
         private LevelTask _levelTask;
-        private SymbolSpawner _symbolSpawner;
 
         private void Awake()
         {
@@ -28,16 +26,18 @@ namespace Assets.Src.Scripts.Game
             _restartButton.onClick.AddListener(ShowLoadingWindow);
             _levelTask.OnCompleteLevelHandler += ShowMenu;            
             _restartButton.gameObject.SetActive(false);
-
-            _gridLayoutGroup.constraintCount = _symbolSpawner
-                .GetCurrentBundle().SymbolData.ColumnsCount;
         }
 
-        public void Construct(LevelTask levelTask,SymbolSpawner symbolSpawner)
+        public void Construct(LevelTask levelTask)
         {
             _levelTask = levelTask;
-            _symbolSpawner = symbolSpawner;
         }
+
+        public void SetLayoutConstrainCount(int count)
+        => _gridLayoutGroup.constraintCount = count;
+
+        public void SetInputLimiter(bool isAble)
+        => _inputLimiter.gameObject.SetActive(isAble);
 
         public void HideTask()
         {
@@ -52,9 +52,6 @@ namespace Assets.Src.Scripts.Game
             _taskText.DOFade(1, 0.25f)
                 .OnComplete(() => _inputLimiter.gameObject.SetActive(false));
         }
-
-        public void SetInputLimiter(bool isAble)
-        => _inputLimiter.gameObject.SetActive(isAble);
 
         private void ShowMenu()
         {

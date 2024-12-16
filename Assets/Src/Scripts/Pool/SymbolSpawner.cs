@@ -44,7 +44,12 @@ namespace Assets.Src.Scripts.Pool
         => _symbolBundle[_bundleId];
 
         public void StartSpawn(int quantity)
-        => StartCoroutine(SpawnSymbol(quantity));
+        {
+            GameMenu.SetLayoutConstrainCount(
+                _symbolBundle[_bundleId].SymbolData.ColumnsCount);
+
+            StartCoroutine(SpawnSymbol(quantity));
+        }
 
         private IEnumerator DisableSymbols()
         {
