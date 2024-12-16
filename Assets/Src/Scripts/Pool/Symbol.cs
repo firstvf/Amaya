@@ -6,9 +6,9 @@ namespace Assets.Src.Scripts.Pool
 {
     public class Symbol : MonoBehaviour
     {
-        [SerializeField] private Image _symbolImage;
+        [SerializeField] private SpriteRenderer _symbolView;
         [SerializeField] private Image _symbolBackground;
-        [SerializeField] private Button _button;
+        [SerializeField] private Button _button;        
         private string _identifier;
         private bool _isRotate;
         private Tweener _wrongAnswerTweener;
@@ -42,12 +42,12 @@ namespace Assets.Src.Scripts.Pool
         public void RotateImage()
         {
             _isRotate = true;
-            _symbolImage.transform.DORotate(new Vector3(0, 0, -90), 0);
+            _symbolView.transform.DORotate(new Vector3(0, 0, -90), 0);
         }
 
         public void SetSymbol(Sprite symbol, string identifier, Color backgroundColor)
         {
-            _symbolImage.sprite = symbol;
+            _symbolView.sprite = symbol;
             _symbolBackground.color = backgroundColor;
             _identifier = identifier;
 
@@ -58,7 +58,7 @@ namespace Assets.Src.Scripts.Pool
             if (_isRotate)
             {
                 _isRotate = false;
-                _symbolImage.transform.DORotate(new Vector3(0, 0, 0), 0);
+                _symbolView.transform.DORotate(new Vector3(0, 0, 0), 0);
             }
         }
 
@@ -68,7 +68,7 @@ namespace Assets.Src.Scripts.Pool
             {
                 _spawner.LevelTask.Win();
 
-                _symbolImage.transform.DOScale(new Vector3(1.5f, 1.5f, 1), 0.1f)
+                _symbolView.transform.DOScale(new Vector3(1.5f, 1.5f, 1), 0.1f)
                     .SetLoops(2, LoopType.Yoyo)
                     .SetEase(Ease.Linear);
 
@@ -80,7 +80,7 @@ namespace Assets.Src.Scripts.Pool
                 if (_wrongAnswerTweener.IsActive())
                     _wrongAnswerTweener.Complete();
 
-                _wrongAnswerTweener = _symbolImage.transform
+                _wrongAnswerTweener = _symbolView.transform
                      .DOShakePosition(0.25f, new Vector2(2f, 0), randomness: 0,
                      randomnessMode: ShakeRandomnessMode.Harmonic)
                      .OnStart(() => _spawner.GameAudio.PlayWrongAnswerSound());

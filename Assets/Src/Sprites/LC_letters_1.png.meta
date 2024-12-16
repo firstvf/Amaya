@@ -85,7 +85,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -293,9 +293,9 @@ TextureImporter:
       name: LC_letters_1_7
       rect:
         serializedVersion: 2
-        x: 667
+        x: 663
         y: 394
-        width: 93
+        width: 100
         height: 311
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

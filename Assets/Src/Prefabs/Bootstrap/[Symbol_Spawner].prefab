@@ -43,9 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f3a40e552d201458a3b941b3c9a858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _symbolBundle:
-  - {fileID: 11400000, guid: 5da3f83528a8a0440b124ac9fc6c8c94, type: 2}
-  - {fileID: 11400000, guid: af580ea8794d69643b5ab0c55a6e2c80, type: 2}
   _colors:
   - serializedVersion: 2
     rgba: 4292588749
@@ -66,3 +63,7 @@ MonoBehaviour:
   - serializedVersion: 2
     rgba: 4293715455
   _symbol: {fileID: 8086055156481836248, guid: ac538a68ad4e9e0488726be691dab82a, type: 3}
+  _symbolBundle:
+  - {fileID: 11400000, guid: af580ea8794d69643b5ab0c55a6e2c80, type: 2}
+  - {fileID: 11400000, guid: 5da3f83528a8a0440b124ac9fc6c8c94, type: 2}
+  _specificBundleId: 0
