@@ -13,6 +13,7 @@ namespace Assets.Src.Scripts.Pool
         private bool _isRotate;
         private Tweener _wrongAnswerTweener;
         private SymbolSpawner _spawner;
+        private bool _isSetup = false;
 
         private void Start()
         {
@@ -21,8 +22,11 @@ namespace Assets.Src.Scripts.Pool
 
         public void Construct(SymbolSpawner symbolSpawner)
         {
+            _isSetup = true;
             _spawner = symbolSpawner;
         }
+
+        public bool CheckSetup() => _isSetup;
 
         public void DisableSymbol()
         {

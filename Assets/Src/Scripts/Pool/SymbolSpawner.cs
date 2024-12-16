@@ -23,7 +23,7 @@ namespace Assets.Src.Scripts.Pool
         private void Start()
         {
             _container = GameMenu.GameBoard;
-            _pooler = new ObjectPooler<Symbol>(_symbol, _container, 9);
+            _pooler = new ObjectPooler<Symbol>(_symbol, _container, 3);
             _bundleId = Random.Range(0, _symbolBundle.Length);
 
             foreach (var symbol in _pooler.GetList())
@@ -75,6 +75,9 @@ namespace Assets.Src.Scripts.Pool
 
                 int colorId = Random.Range(0, _colors.Length);
                 var symbol = _pooler.GetFreeObjectFromPool();
+
+                if (symbol.CheckSetup() == false)
+                    symbol.Construct(this);
 
                 symbol.SetSymbol(
                     _symbolBundle[_bundleId].SymbolData.SpriteArray[symbolId],
